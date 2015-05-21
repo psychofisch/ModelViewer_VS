@@ -24,7 +24,10 @@ class ofApp : public ofBaseApp{
 		ofLight light;
 
 		ofPoint modelPosition;
+		ofPoint lightPosition;
 		int rotz;
 		int modelSelect;
 		int shading;
+
+		bool wire;
 };

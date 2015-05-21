@@ -1,4 +1,5 @@
 #include "ofApp.h"
+#include <math.h>
 
 //--------------------------------------------------------------
 void ofApp::setup(){
@@ -23,7 +24,11 @@ void ofApp::setup(){
 	modelSelect = 0;
 	model.enableMaterials();
 	//***
+	lightPosition = modelPosition;
+	lightPosition.x += 200;
+	light.setPosition((ofVec3f)lightPosition);
 	shading = GL_SMOOTH;
+	wire = false;
 }
 
 //--------------------------------------------------------------
@@ -43,6 +48,8 @@ void ofApp::draw(){
 	ofSetColor(255);
 	light.enable();
 	light.setPosition(mouseX, mouseY, modelPosition.z + 200);
+	//lightPosition = modelPosition;
+	//light.setPosition((ofVec3f)lightPosition);
 	ofPopStyle();
 
 	//Floor
@@ -66,7 +73,10 @@ void ofApp::draw(){
 	ofPushMatrix();
 	//ofTranslate(0, 0, 50);
 	//ofRotate(mouseX, 1, 0, 0);
-	model.drawFaces();
+	if (wire == true)
+		model.drawWireframe();
+	else
+		model.drawFaces();
 	ofPopMatrix();
 	ofPopStyle();
 
@@ -90,11 +100,13 @@ void ofApp::keyPressed(int key){
 			break;
 		case '2': modelPosition.z -= 5;
 			break;
-		case '3': rotz += 5;
+		case '3': rotz = (rotz + 5) % 360;
 			break;
-		case '4': rotz -= 5;
+		case '4': rotz = (rotz - 5) % 360;
 			break;
 		case 'm': modelSelect = (modelSelect+1)%2;
+			break;
+		case 'w': wire = !wire;
 			break;
 		case 's':	if (shading == GL_SMOOTH)
 						shading = GL_FLAT;
