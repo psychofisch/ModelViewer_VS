@@ -28,6 +28,7 @@ class ofApp : public ofBaseApp{
 		int rotz;
 		int modelSelect;
 		int shading;
+		float oldX, mouseDiff;
 
 		bool wire;
 };

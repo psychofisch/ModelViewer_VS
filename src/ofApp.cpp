@@ -27,6 +27,7 @@ void ofApp::setup(){
 	lightPosition = modelPosition;
 	lightPosition.x += 200;
 	light.setPosition((ofVec3f)lightPosition);
+	oldX = mouseX;
 	shading = GL_SMOOTH;
 	wire = false;
 }
@@ -47,9 +48,11 @@ void ofApp::draw(){
 	ofPushStyle();
 	ofSetColor(255);
 	light.enable();
-	light.setPosition(mouseX, mouseY, modelPosition.z + 200);
-	//lightPosition = modelPosition;
-	//light.setPosition((ofVec3f)lightPosition);
+	mouseDiff = (mouseX - oldX)/2;
+	lightPosition.y = mouseY;
+	lightPosition.rotate(mouseDiff, (ofVec3f)modelPosition, ofVec3f(0, 1, 0));
+	//lightPosition.set(mouseX, mouseY, modelPosition.z + 200);
+	light.setPosition((ofVec3f)lightPosition);
 	ofPopStyle();
 
 	//Floor
@@ -62,8 +65,8 @@ void ofApp::draw(){
 	glBegin(GL_QUADS);
 	glVertex3f(fx-200, fy, fz-200);
 	glVertex3f(fx-200, fy, fz+200);
-	glVertex3f(fx+200, fy, fz-200);
 	glVertex3f(fx+200, fy, fz+200);
+	glVertex3f(fx+200, fy, fz-200);
 	glEnd();
 	ofPopStyle();
 	//***
@@ -89,7 +92,9 @@ void ofApp::draw(){
 	ofDrawBitmapString("modelpos: " + ofToString(modelPosition) , 10, 25);
 	ofDrawBitmapString("rotz: " + ofToString(rotz), 10, 35);
 	ofDrawBitmapString("mousexy: " + ofToString(mouseX) + " - " + ofToString(mouseY), 10, 45);
-	ofDrawBitmapString("lightpos: " + ofToString(light.getPosition()), 10, 55);
+	ofDrawBitmapString("lightpos: " + ofToString(lightPosition), 10, 55);
+
+	oldX = mouseX;
 }
 
 //--------------------------------------------------------------
@@ -145,7 +150,18 @@ void ofApp::mouseReleased(int x, int y, int button){
 
 //--------------------------------------------------------------
 void ofApp::windowResized(int w, int h){
+	if (h == 0) { h= 1; }
 
+	ofViewport(0, 0, w, h, false);
+	ofMatrixMode(GL_PROJECTION);
+	ofLoadIdentityMatrix();
+	ofSetupScreenPerspective(w, h, 45, 0.1, 100.0);
+	ofMatrixMode(GL_MODELVIEW);
+	/*glViewport(0, 0, w, h);
+	glMatrixMode(GL_PROJECTION);
+	glLoadIdentity();
+	gluPerspective(45.0f, (GLfloat)w / (GLfloat)h, 0.1f, 100.0f);
+	glMatrixMode(GL_MODELVIEW);*/
 }
 
 //--------------------------------------------------------------
