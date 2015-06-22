@@ -2,6 +2,7 @@
 
 #include "ofMain.h"
 #include "ofxAssimpModelLoader.h"
+#include "ofxGui.h"
 
 class ofApp : public ofBaseApp{
 
@@ -30,5 +31,8 @@ class ofApp : public ofBaseApp{
 		int shading;
 		float oldX, mouseDiff;
 
-		bool wire;
+		//bool wire;
+		ofxPanel gui;
+		ofxVec3Slider center;
+		ofxToggle wire;
 };
