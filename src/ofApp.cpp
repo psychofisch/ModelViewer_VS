@@ -28,7 +28,8 @@ void ofApp::setup(){
 	//Load model
 	//model.loadModel("C:/Users/Psycho/Desktop/teapot_uv.obj", true);
 	if (modelPath == "1")
-		model.loadModel("G:/AnimationStuff/Models/AH-64_Apache/AH-64_Apache/AH-64_Apache.obj", true);
+		model.loadModel("G:/FH/Sem4/ECG/download/of_v0.8.4_vs_release/apps/myApps/ModelViewer_VS/DefaultObject/Apple.obj", true);
+		//model.loadModel("G:/AnimationStuff/Models/AH-64_Apache/AH-64_Apache/AH-64_Apache.obj", true);
 	else
 		model.loadModel(modelPath, true);
 	modelPosition.set(ofGetWidth() * 0.5, (float)ofGetHeight() * 0.75, 10);
