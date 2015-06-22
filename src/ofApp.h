@@ -1,5 +1,10 @@
 #pragma once
 
+#define L_POINT "Point"
+#define L_DIR "Directional"
+#define L_SPOT "Spot"
+#define L_UNKNWN "Unknown"
+
 #include "ofMain.h"
 #include "ofxAssimpModelLoader.h"
 #include "ofxGui.h"
@@ -22,6 +27,7 @@ class ofApp : public ofBaseApp{
 		void windowResized(int w, int h);
 		void dragEvent(ofDragInfo dragInfo);
 		void gotMessage(ofMessage msg);
+		//string getLightMode(ofLight l);
 		
 		ofxAssimpModelLoader model;
 		ofMaterial material;
@@ -38,5 +44,11 @@ class ofApp : public ofBaseApp{
 		//bool wire;
 		ofxPanel gui;
 		ofxVec3Slider center;
+		ofxVec3Slider rotation;
+		ofxFloatSlider scale;
 		ofxToggle wire;
+		ofxToggle floor;
+		ofxColorSlider color;
+		ofxColorSlider lightColor;
+		ofxLabel lightMode;
 };
