@@ -1,7 +1,14 @@
 #include "ofApp.h"
 #include <math.h>
+#include <iostream>
+#include <fstream>
 
 //--------------------------------------------------------------
+ofApp::ofApp(std::string input)
+{
+	modelPath = input;
+}
+
 void ofApp::setup(){
 	//ofSetVerticalSync(true);
 
@@ -15,9 +22,11 @@ void ofApp::setup(){
 	ofBackgroundGradient(background1, background2, OF_GRADIENT_LINEAR);
 	//ofBackground(background2);
 	//***
-
 	//Load model
-	model.loadModel("C:/Users/Psycho/Desktop/teapot_uv.obj", true);
+	//model.loadModel("C:/Users/Psycho/Desktop/teapot_uv.obj", true);
+	
+
+	model.loadModel("G:/AnimationStuff/Models/AH-64_Apache/AH-64_Apache/AH-64_Apache.obj", true);
 	modelPosition.set(ofGetWidth() * 0.5, (float)ofGetHeight() * 0.75, 10);
 	model.setPosition(modelPosition.x, modelPosition.y, modelPosition.z);
 	rotz = 0;
@@ -30,6 +39,11 @@ void ofApp::setup(){
 	oldX = mouseX;
 	shading = GL_SMOOTH;
 	wire = false;
+
+	gui.setup(); // most of the time you don't need a name
+	gui.add(wire.setup("Wireframe", true));
+	//gui.add(center.setup("Center", ofVec3f(ofGetWidth()*.5, ofGetHeight()*.5), ofVec3f(0, 0), ofVec3f(ofGetWidth(), ofGetHeight())));
+	gui.add(center.setup("Center", ofVec3f(ofGetWidth()*.5, ofGetHeight()*.5), ofVec3f(0, 0, -1000), ofVec3f(1920, 1080, 1000)));
 }
 
 //--------------------------------------------------------------
@@ -44,6 +58,9 @@ void ofApp::draw(){
 	ofEnableBlendMode(OF_BLENDMODE_ALPHA);
 	ofEnableDepthTest();
 	glShadeModel(shading);
+
+	model.setPosition(modelPosition.x, modelPosition.y, modelPosition.z);
+	modelPosition.set(center);
 
 	ofPushStyle();
 	ofSetColor(255);
@@ -88,13 +105,15 @@ void ofApp::draw(){
 	ofDisableLighting();
 
 	ofSetColor(0);
-	ofDrawBitmapString("fps: " + ofToString(ofGetFrameRate(), 2), 10, 15);
-	ofDrawBitmapString("modelpos: " + ofToString(modelPosition) , 10, 25);
-	ofDrawBitmapString("rotz: " + ofToString(rotz), 10, 35);
-	ofDrawBitmapString("mousexy: " + ofToString(mouseX) + " - " + ofToString(mouseY), 10, 45);
-	ofDrawBitmapString("lightpos: " + ofToString(lightPosition), 10, 55);
+	ofDrawBitmapString("fps: " + ofToString(ofGetFrameRate(), 2), 100, 15);
+	ofDrawBitmapString("modelpos: " + ofToString(modelPosition) , 100, 25);
+	ofDrawBitmapString("rotz: " + ofToString(rotz), 100, 35);
+	ofDrawBitmapString("mousexy: " + ofToString(mouseX) + " - " + ofToString(mouseY), 100, 45);
+	ofDrawBitmapString("lightpos: " + ofToString(lightPosition), 100, 55);
 
 	oldX = mouseX;
+
+	gui.draw();
 }
 
 //--------------------------------------------------------------
@@ -150,13 +169,16 @@ void ofApp::mouseReleased(int x, int y, int button){
 
 //--------------------------------------------------------------
 void ofApp::windowResized(int w, int h){
-	if (h == 0) { h= 1; }
+	/*if (h == 0) { h= 1; }
 
 	ofViewport(0, 0, w, h, false);
 	ofMatrixMode(GL_PROJECTION);
 	ofLoadIdentityMatrix();
 	ofSetupScreenPerspective(w, h, 45, 0.1, 100.0);
-	ofMatrixMode(GL_MODELVIEW);
+	ofMatrixMode(GL_MODELVIEW);*/
+	//center.clear();
+	//center.setup("Center", ofVec2f(ofGetWidth()*.5, ofGetHeight()*.5), ofVec2f(0, 0), ofVec2f(ofGetWidth(), ofGetHeight()));
+	
 	/*glViewport(0, 0, w, h);
 	glMatrixMode(GL_PROJECTION);
 	glLoadIdentity();

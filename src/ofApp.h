@@ -2,10 +2,13 @@
 
 #include "ofMain.h"
 #include "ofxAssimpModelLoader.h"
+#include "ofxGui.h"
 
 class ofApp : public ofBaseApp{
 
 	public:
+		ofApp(std::string);
+
 		void setup();
 		void update();
 		void draw();
@@ -21,6 +24,8 @@ class ofApp : public ofBaseApp{
 		void gotMessage(ofMessage msg);
 		
 		ofxAssimpModelLoader model;
+		ofMaterial material;
+		std::string modelPath;
 		ofLight light;
 
 		ofPoint modelPosition;
@@ -30,5 +35,8 @@ class ofApp : public ofBaseApp{
 		int shading;
 		float oldX, mouseDiff;
 
-		bool wire;
+		//bool wire;
+		ofxPanel gui;
+		ofxVec3Slider center;
+		ofxToggle wire;
 };
