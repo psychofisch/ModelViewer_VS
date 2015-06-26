@@ -9,3 +9,16 @@ Ni 1.000000
 d 1.000000
 illum 2
 map_Kd Apple_Sphere.png
+
+
+newmtl Twig_skin_Twig.png
+Ns 96.078431
+Ka 0.000000 0.000000 0.000000
+Kd 0.640000 0.640000 0.640000
+Ks 0.500000 0.500000 0.500000
+Ni 1.000000
+d 1.000000
+illum 2
+map_Kd Twig.png
+
+

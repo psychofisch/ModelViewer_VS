@@ -33,6 +33,8 @@ class ofApp : public ofBaseApp{
 		ofMaterial material;
 		std::string modelPath;
 		ofLight light;
+		ofLight light2;
+		ofPoint light2Position;
 
 		ofPoint modelPosition;
 		ofPoint lightPosition;
@@ -40,14 +42,18 @@ class ofApp : public ofBaseApp{
 		int modelSelect;
 		int shading;
 		float oldX, mouseDiff;
+		bool hide;
+		bool lightRotate;
+		bool modelRotate;
 
-		//bool wire;
 		ofxPanel gui;
 		ofxVec3Slider center;
 		ofxVec3Slider rotation;
 		ofxFloatSlider scale;
+		ofxFloatSlider emit;
 		ofxToggle wire;
 		ofxToggle floor;
+		ofxToggle textureOn;
 		ofxColorSlider color;
 		ofxColorSlider lightColor;
 		ofxLabel lightMode;
