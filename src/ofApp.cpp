@@ -3,9 +3,6 @@
 #include <iostream>
 #include <fstream>
 
-string getLightMode(ofLight);
-string switchLightMode(ofLight &l);
-
 //--------------------------------------------------------------
 ofApp::ofApp(std::string input)
 {
@@ -43,10 +40,23 @@ void ofApp::setup(){
 	modelSelect = 0;
 	model.enableMaterials();
 	//***
-	lightPosition = modelPosition;
+
+	//Light
+	/*lightPosition = modelPosition;
 	lightPosition.x += 300;
 	light.setPosition((ofVec3f)lightPosition);
 	light.setPointLight();
+
+	light2Position = modelPosition;
+	light2Position.z -= 290;
+	light2.setPosition((ofVec3f)light2Position);
+	light2.setPointLight();
+	light2.setDiffuseColor(ofColor(137, 155, 100, 255));*/
+	light.setPointLight();
+	light2.setPointLight();
+	//LightRepositioning();
+	//***
+
 	oldX = mouseX;
 	shading = GL_SMOOTH;
 	wire = false;
@@ -54,11 +64,10 @@ void ofApp::setup(){
 	gui.setup(); // most of the time you don't need a name
 	gui.add(wire.setup("Wireframe", false));
 	gui.add(floor.setup("Floor", false));
-	//gui.add(center.setup("Center", ofVec3f(ofGetWidth()*.5, ofGetHeight()*.5), ofVec3f(0, 0), ofVec3f(ofGetWidth(), ofGetHeight())));
 	gui.add(center.setup("Model Position", ofVec3f(ofGetWidth()*.5, ofGetHeight()*.5), ofVec3f(0, 0, -1000), ofVec3f(1920, 1080, 1000)));
 	gui.add(rotation.setup("Model Rotation", ofVec3f(0), ofVec3f(-180), ofVec3f(180)));
 	gui.add(scale.setup("Model Scale", 1, 0, 2));
-	gui.add(color.setup("Material Color", ofColor(100, 100, 140), ofColor(0, 0), ofColor(255, 255)));
+	gui.add(color.setup("Material Color", ofColor(200, 200, 200), ofColor(0, 0), ofColor(255, 255)));
 	gui.add(emit.setup("Material Emit", 0, 0, 1));
 	gui.add(textureOn.setup("Texture", true));
 	gui.add(lightColor.setup("Light Color", ofColor(200, 230, 255, 255) , ofColor(0, 0), ofColor(255, 255)));
@@ -70,14 +79,10 @@ void ofApp::setup(){
 	light.setPointLight();
 	lightMode = getLightMode(light);
 
-	light2Position = modelPosition;
-	light2Position.z -= 290;
-	light2.setPosition((ofVec3f)light2Position);
-	light2.setPointLight();
-	light2.setDiffuseColor(ofColor(137, 155, 100, 255));
-
 	lightRotate = false;
 	modelRotate = false;
+
+	windowResized(1024, 768);
 
 	//DEBUG
 	vector<string> v = model.getMeshNames();
@@ -286,7 +291,7 @@ void ofApp::mouseDragged(int x, int y, int button){
 void ofApp::mousePressed(int x, int y, int button){
 	//cout << button;
 	switch (button){
-		case 1: lightRotate = true;
+		case 0: lightRotate = true;
 			break;
 		case 2: modelRotate = true;
 			break;
@@ -296,7 +301,7 @@ void ofApp::mousePressed(int x, int y, int button){
 //--------------------------------------------------------------
 void ofApp::mouseReleased(int x, int y, int button){
 	switch (button){
-		case 1: lightRotate = false;
+		case 0: lightRotate = false;
 			break;
 		case 2: modelRotate = false;
 			break;
@@ -306,6 +311,7 @@ void ofApp::mouseReleased(int x, int y, int button){
 //--------------------------------------------------------------
 void ofApp::windowResized(int w, int h){
 	center = ofVec3f(w*0.5, h*0.5, 10);
+	LightRepositioning();
 }
 
 //--------------------------------------------------------------
@@ -318,7 +324,7 @@ void ofApp::dragEvent(ofDragInfo dragInfo){
 
 }
 
-string getLightMode(ofLight l)
+string ofApp::getLightMode(ofLight l)
 {
 	//cout << l.getType();
 	if (l.getIsDirectional())
@@ -331,7 +337,7 @@ string getLightMode(ofLight l)
 		return L_UNKNWN;
 }
 
-string switchLightMode(ofLight &l)
+string ofApp::switchLightMode(ofLight &l)
 {
 	//**ISSUE**
 	//Point -> Directional -> Works
@@ -352,4 +358,16 @@ string switchLightMode(ofLight &l)
 
 	cout << getLightMode(l) << endl;
 	return getLightMode(l);
+}
+
+void ofApp::LightRepositioning()
+{
+	lightPosition.set(center);
+	light2Position.set(center);
+
+	lightPosition.x *= 0.6;
+	light.setPosition((ofVec3f)lightPosition);
+
+	light2Position.z += center->x * 0.6;
+	light2.setPosition((ofVec3f)light2Position);
 }
