@@ -1,4 +1,4 @@
-ModelViewer
+ModelViewer 0.6
 ----------------
 1. Overview
 With this program you can open 3D models and render them in OpenGL.
@@ -40,6 +40,14 @@ A: The modelLoader-AddOn from OpenFrameworks is a bit buggy. Try to open the def
 
 Q: AHH! My GUI is gone!
 A: You probably hided the GUI, press H ;)
-				
+
+Q: Lights/Model keeps rotating after I released the mouse button
+A: There is a bug in GUI where the "mouse release" does not get recognized when you are inside the GUI.
+	Just click the mouse again and release it outside of the GUI.
+
+Q: Why does my model don't have any textures?
+A: When you have exported your model with Blender this could be the reason.
+	I was not able to export a model out of Blender and load it with textures into de ModelViewer.
+	
 5. Credits
-Thomas Fischer
+Thomas Fischer (if13b023)
