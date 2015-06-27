@@ -27,11 +27,13 @@ If your model has textures attached they get automatically loaded.
     partly LWS
 
 3. Controls
-Left Mouse Button - Rotate Light
+Left Mouse Button 	- Rotate Light
+Middle Mouse Button - Scale Model
 Right Mouse Button	- Rotate Model around the local Y-Axis
 				W   - Toggle Wireframe
 				S	- Toggle Shading Mode (Smooth, Flat)
 				H 	- Toggle GUI
+				T 	- Toggle Textures
 The rest is controlled by the GUI.
 				
 4. FAQ

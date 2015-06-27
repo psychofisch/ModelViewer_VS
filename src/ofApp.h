@@ -48,6 +48,7 @@ class ofApp : public ofBaseApp{
 		bool hide;
 		bool lightRotate;
 		bool modelRotate;
+		bool modelScale;
 
 		ofxPanel gui;
 		ofxVec3Slider center;

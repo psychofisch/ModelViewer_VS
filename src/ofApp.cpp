@@ -81,6 +81,7 @@ void ofApp::setup(){
 
 	lightRotate = false;
 	modelRotate = false;
+	modelScale = false;
 
 	windowResized(1024, 768);
 
@@ -114,6 +115,10 @@ void ofApp::draw(){
 	//Model Position and Rotation
 	modelPosition.set(center);
 	model.setPosition(modelPosition.x, modelPosition.y, modelPosition.z);
+	if (modelScale && mouseX != 0)
+	{
+		scale = ((float)mouseX / ofGetWindowWidth()) * 2;
+	}
 	if (modelRotate)
 	{
 		rotation = ((ofVec3f)rotation + ofVec3f(0, mouseDiffX, mouseDiffY));
@@ -255,6 +260,8 @@ void ofApp::keyPressed(int key){
 			break;
 		case 'w': wire = !wire;
 			break;
+		case 't': textureOn = !textureOn;
+			break;
 		case 's':	if (shading == GL_SMOOTH)
 						shading = GL_FLAT;
 					else
@@ -262,10 +269,7 @@ void ofApp::keyPressed(int key){
 			break;
 		case 'l':	//lightMode = switchLightMode(light);
 			break;
-		case 'h':	if (hide)
-						hide = false;
-					else
-						hide = true;
+		case 'h':	hide = !hide;
 			break;
 	}
 	model.setPosition(modelPosition.x, modelPosition.y, modelPosition.z);
@@ -293,6 +297,8 @@ void ofApp::mousePressed(int x, int y, int button){
 	switch (button){
 		case 0: lightRotate = true;
 			break;
+		case 1: modelScale = true;
+			break;
 		case 2: modelRotate = true;
 			break;
 	}
@@ -302,6 +308,8 @@ void ofApp::mousePressed(int x, int y, int button){
 void ofApp::mouseReleased(int x, int y, int button){
 	switch (button){
 		case 0: lightRotate = false;
+			break;
+		case 1: modelScale = false;
 			break;
 		case 2: modelRotate = false;
 			break;
