@@ -4,6 +4,9 @@ ModelViewer 0.6
 With this program you can open 3D models and render them in OpenGL.
 If your model has textures attached they get automatically loaded.
 
+To open a model just right click on it, "Open with" and then navigate to the ModelViewer
+or type in the absolute path to the desired model.
+
 2. Supported Files
     3DS
     ASE

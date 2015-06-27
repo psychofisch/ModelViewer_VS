@@ -22,9 +22,7 @@ void ofApp::setup(){
 	ofBackgroundGradient(background1, background2, OF_GRADIENT_LINEAR);
 	//***
 	//Load model
-	if (modelPath == "1")
-		FileExist =	model.loadModel("G:/FH/Sem4/ECG/download/of_v0.8.4_vs_release/apps/myApps/ModelViewer_VS/DefaultObject/Apple.obj", true);
-	else
+	if (modelPath != "")
 		FileExist = model.loadModel(modelPath, true);
 	if (!FileExist)
 		exit();
