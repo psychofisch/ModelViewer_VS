@@ -11,7 +11,6 @@ ofApp::ofApp(std::string input)
 
 void ofApp::setup(){
 	bool FileExist;
-	//ofSetVerticalSync(true);
 
 	//Background
 	ofColor background1;
@@ -21,15 +20,10 @@ void ofApp::setup(){
 	background2.set(100, 100, 100);
 
 	ofBackgroundGradient(background1, background2, OF_GRADIENT_LINEAR);
-	//ofBackground(background2);
 	//***
 	//Load model
-	//model.loadModel("C:/Users/Psycho/Desktop/teapot_uv.obj", true);
 	if (modelPath == "1")
-		FileExist =
-		//model.loadModel("G:/FH/Sem4/ECG/UV_Cube.obj", true);
-		model.loadModel("G:/FH/Sem4/ECG/download/of_v0.8.4_vs_release/apps/myApps/ModelViewer_VS/DefaultObject/Apple.obj", true);
-		//model.loadModel("G:/AnimationStuff/Models/AH-64_Apache/AH-64_Apache/AH-64_Apache.obj", true);
+		FileExist =	model.loadModel("G:/FH/Sem4/ECG/download/of_v0.8.4_vs_release/apps/myApps/ModelViewer_VS/DefaultObject/Apple.obj", true);
 	else
 		FileExist = model.loadModel(modelPath, true);
 	if (!FileExist)
@@ -42,19 +36,8 @@ void ofApp::setup(){
 	//***
 
 	//Light
-	/*lightPosition = modelPosition;
-	lightPosition.x += 300;
-	light.setPosition((ofVec3f)lightPosition);
-	light.setPointLight();
-
-	light2Position = modelPosition;
-	light2Position.z -= 290;
-	light2.setPosition((ofVec3f)light2Position);
-	light2.setPointLight();
-	light2.setDiffuseColor(ofColor(137, 155, 100, 255));*/
 	light.setPointLight();
 	light2.setPointLight();
-	//LightRepositioning();
 	//***
 
 	oldX = mouseX;
@@ -68,7 +51,6 @@ void ofApp::setup(){
 	gui.add(rotation.setup("Model Rotation", ofVec3f(0), ofVec3f(-180), ofVec3f(180)));
 	gui.add(scale.setup("Model Scale", 1, 0, 2));
 	gui.add(color.setup("Material Color", ofColor(200, 200, 200), ofColor(0, 0), ofColor(255, 255)));
-	gui.add(emit.setup("Material Emit", 0, 0, 1));
 	gui.add(textureOn.setup("Texture", true));
 	gui.add(lightColor.setup("Light Color", ofColor(200, 230, 255, 255) , ofColor(0, 0), ofColor(255, 255)));
 	gui.add(lightMode.setup("Light Mode", "<unset>"));
@@ -139,9 +121,6 @@ void ofApp::draw(){
 	//***
 
 	//Light
-	//ofPushStyle();
-	//ofSetColor(255);
-	//ofSetColor(lightColor);
 	light.setDiffuseColor((ofColor)lightColor);
 	light.enable();
 	if (light2On)
@@ -161,7 +140,6 @@ void ofApp::draw(){
 		light.setPosition((ofVec3f)lightPosition);
 		light2.setPosition((ofVec3f)light2Position);
 	}
-	//ofPopStyle();
 	//****
 
 	//Floor
@@ -186,39 +164,18 @@ void ofApp::draw(){
 	//Model Material, Color and Drawing
 	ofPushStyle();
 	ofSetColor(color);
-	//ofSetColor(ofColor(100, 255, 100));
-	/*material = model.getMaterialForMesh(0);
-	material.begin();
-	model.enableColors();
-	model.enableMaterials();*/
 	model.disableMaterials();
 	if (textureOn)
 		model.enableTextures();
 	else
 		model.disableTextures();
-	/*material.setDiffuseColor((ofColor)color);
-	//material.setEmissiveColor((ofColor)color * emit);
-	material.setShininess(emit);
-	material.setAmbientColor(ofColor(255, 0, 0, 255));
-	material.end();*/
-	//model.draw(OF_MESH_FILL);
-	//ofPushMatrix();
-	//ofTranslate(0, 0, 50);
-	//ofRotate(mouseX, 1, 0, 0);
+
 	if (wire == true)
 		model.drawWireframe();
 	else
 	{
-		//Material
-		/*material = model.getMaterialForMesh(0);
-		material.begin();
-		model.enableMaterials();
-		model.enableTextures();
-		model.enableColors();*/
 		model.drawFaces();
-		//material.end();
 	}
-	//ofPopMatrix();
 	ofPopStyle();
 	//***
 
@@ -236,12 +193,12 @@ void ofApp::draw(){
 
 	ofDisableDepthTest();
 
-	ofSetColor(0);
-	ofDrawBitmapString("fps: " + ofToString(ofGetFrameRate(), 2), 500, 15);
-	ofDrawBitmapString("modelpos: " + ofToString(modelPosition) , 500, 25);
-	//ofDrawBitmapString("rotation: " + ofToString(rotation), 500, 35);
-	ofDrawBitmapString("mousexy: " + ofToString(mouseX) + " - " + ofToString(mouseY), 500, 45);
-	ofDrawBitmapString("lightpos: " + ofToString(lightPosition), 500, 55);
+	//DEBUG
+	//ofSetColor(0);
+	//ofDrawBitmapString("fps: " + ofToString(ofGetFrameRate(), 2), 500, 15);
+	//ofDrawBitmapString("modelpos: " + ofToString(modelPosition) , 500, 25);
+	//ofDrawBitmapString("mousexy: " + ofToString(mouseX) + " - " + ofToString(mouseY), 500, 45);
+	//ofDrawBitmapString("lightpos: " + ofToString(lightPosition), 500, 55);
 
 	//to calculate the difference from the mouse between frames
 	oldX = mouseX;
@@ -266,8 +223,6 @@ void ofApp::keyPressed(int key){
 						shading = GL_FLAT;
 					else
 						shading = GL_SMOOTH;
-			break;
-		case 'l':	//lightMode = switchLightMode(light);
 			break;
 		case 'h':	hide = !hide;
 			break;
