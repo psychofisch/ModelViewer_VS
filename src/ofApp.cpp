@@ -101,18 +101,24 @@ void ofApp::draw(){
 	glShadeModel(shading);
 
 	//Calculate the mouse movement between two frames
-	mouseDiff = (mouseX - oldX) / 2;
+	mouseDiffX = (mouseX - oldX) / 2;
+	mouseDiffY = (mouseY - oldY) / 2;
 
 	//Model Position and Rotation
 	modelPosition.set(center);
 	model.setPosition(modelPosition.x, modelPosition.y, modelPosition.z);
 	if (modelRotate)
 	{
-		rotation = ((ofVec3f)rotation + ofVec3f(0, mouseDiff, 0));
+		rotation = ((ofVec3f)rotation + ofVec3f(0, mouseDiffX, mouseDiffY));
 		if (rotation->y > 180)
 			rotation = ofVec3f(rotation->x, ((int)(rotation->y + 180) % 360) - 180, rotation->z);
-		if (rotation->y < -180)
+		else if (rotation->y < -180)
 			rotation = ofVec3f(rotation->x, ((int)(rotation->y - 180) % 360) + 180, rotation->z);
+
+		if (rotation->z > 180)
+			rotation = ofVec3f(rotation->x, rotation->y, ((int)(rotation->z + 180) % 360) - 180);
+		else if (rotation->z < -180)
+			rotation = ofVec3f(rotation->x, rotation->y, ((int)(rotation->z - 180) % 360) + 180);
 	}
 	model.setRotation(0, rotation->x, 1, 0, 0);
 	model.setRotation(1, rotation->y, 0, 1, 0);
@@ -131,9 +137,9 @@ void ofApp::draw(){
 	{
 		lightPosition.y = mouseY;
 		light2Position.y = mouseY;
-		lightPosition.rotate(mouseDiff, (ofVec3f)modelPosition, ofVec3f(0, 1, 0));
-		light2Position.rotate(mouseDiff, (ofVec3f)modelPosition, ofVec3f(0, 1, 0));
-		//light.rotate(mouseDiff, 0, 0, 1);
+		lightPosition.rotate(mouseDiffX, (ofVec3f)modelPosition, ofVec3f(0, 1, 0));
+		light2Position.rotate(mouseDiffX, (ofVec3f)modelPosition, ofVec3f(0, 1, 0));
+		//light.rotate(mouseDiffX, 0, 0, 1);
 		//lightPosition.set(mouseX, mouseY, modelPosition.z + 200);
 		light.setPosition((ofVec3f)lightPosition);
 		light2.setPosition((ofVec3f)light2Position);
@@ -217,6 +223,7 @@ void ofApp::draw(){
 
 	//to calculate the difference from the mouse between frames
 	oldX = mouseX;
+	oldY = mouseY;
 
 	//to see the gui
 	if (!hide)

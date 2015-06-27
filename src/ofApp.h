@@ -41,7 +41,7 @@ class ofApp : public ofBaseApp{
 		int rotz;
 		int modelSelect;
 		int shading;
-		float oldX, mouseDiff;
+		float oldX, oldY, mouseDiffY, mouseDiffX;
 		bool hide;
 		bool lightRotate;
 		bool modelRotate;
