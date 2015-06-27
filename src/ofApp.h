@@ -35,6 +35,7 @@ class ofApp : public ofBaseApp{
 		ofLight light;
 		ofLight light2;
 		ofPoint light2Position;
+		ofColor light2Color;
 
 		ofPoint modelPosition;
 		ofPoint lightPosition;
@@ -57,4 +58,6 @@ class ofApp : public ofBaseApp{
 		ofxColorSlider color;
 		ofxColorSlider lightColor;
 		ofxLabel lightMode;
+		ofxToggle light2On;
+		ofxFloatSlider light2Strength;
 };

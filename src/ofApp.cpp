@@ -63,13 +63,15 @@ void ofApp::setup(){
 	gui.add(textureOn.setup("Texture", true));
 	gui.add(lightColor.setup("Light Color", ofColor(200, 230, 255, 255) , ofColor(0, 0), ofColor(255, 255)));
 	gui.add(lightMode.setup("Light Mode", "<unset>"));
+	gui.add(light2On.setup("Light2", true));
+	gui.add(light2Strength.setup("Light2 Strength", 0.9, 0, 1));
 	hide = false;
 
 	light.setPointLight();
 	lightMode = getLightMode(light);
 
-	light2Position = lightPosition;
-	lightPosition.x -= 600;
+	light2Position = modelPosition;
+	light2Position.z -= 290;
 	light2.setPosition((ofVec3f)light2Position);
 	light2.setPointLight();
 	light2.setDiffuseColor(ofColor(137, 155, 100, 255));
@@ -127,24 +129,29 @@ void ofApp::draw(){
 	//***
 
 	//Light
-	ofPushStyle();
+	//ofPushStyle();
 	//ofSetColor(255);
-	ofSetColor(lightColor);
-	//light.setDiffuseColor((ofColor)lightColor);
+	//ofSetColor(lightColor);
+	light.setDiffuseColor((ofColor)lightColor);
 	light.enable();
-	//light2.enable();
+	if (light2On)
+	{
+		light2Color.set(lightColor);
+		light2Color.setHueAngle(light2Color.getHueAngle() + 180);
+		light2Color.setBrightness(light2Color.getBrightness()*light2Strength);
+		light2.setDiffuseColor(ofColor(light2Color));
+		light2.enable();
+	}
 	if (lightRotate)
 	{
 		lightPosition.y = mouseY;
-		light2Position.y = mouseY;
+		light2Position.y = mouseY+100;
 		lightPosition.rotate(mouseDiffX, (ofVec3f)modelPosition, ofVec3f(0, 1, 0));
 		light2Position.rotate(mouseDiffX, (ofVec3f)modelPosition, ofVec3f(0, 1, 0));
-		//light.rotate(mouseDiffX, 0, 0, 1);
-		//lightPosition.set(mouseX, mouseY, modelPosition.z + 200);
 		light.setPosition((ofVec3f)lightPosition);
 		light2.setPosition((ofVec3f)light2Position);
 	}
-	ofPopStyle();
+	//ofPopStyle();
 	//****
 
 	//Floor
@@ -168,16 +175,17 @@ void ofApp::draw(){
 
 	//Model Material, Color and Drawing
 	ofPushStyle();
+	ofSetColor(color);
 	//ofSetColor(ofColor(100, 255, 100));
 	/*material = model.getMaterialForMesh(0);
 	material.begin();
 	model.enableColors();
-	model.enableMaterials();
+	model.enableMaterials();*/
+	model.disableMaterials();
 	if (textureOn)
 		model.enableTextures();
 	else
 		model.disableTextures();
-	*/ofSetColor(color);
 	/*material.setDiffuseColor((ofColor)color);
 	//material.setEmissiveColor((ofColor)color * emit);
 	material.setShininess(emit);
@@ -204,15 +212,19 @@ void ofApp::draw(){
 	ofPopStyle();
 	//***
 
-	ofDisableDepthTest();
 	light.disable();
 	light2.disable();
 	ofDisableLighting();
 
-	ofSetColor(255);
-	ofSphere(lightPosition, 20);
-	ofSetColor(200);
-	ofSphere(light2Position, 10);
+	ofSetColor(lightColor);
+	ofSphere(lightPosition, 10);
+	if (light2On)
+	{
+		ofSetColor(light2Color);
+		ofSphere(light2Position, 5);
+	}
+
+	ofDisableDepthTest();
 
 	ofSetColor(0);
 	ofDrawBitmapString("fps: " + ofToString(ofGetFrameRate(), 2), 500, 15);
