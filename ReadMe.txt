@@ -44,11 +44,11 @@ Q: My model is just black and the light does not work, why?
 A: The modelLoader-AddOn from OpenFrameworks is a bit buggy. Try to open the default model, this should work.
 
 Q: AHH! My GUI is gone!
-A: You probably hided the GUI, press H ;)
+A: You probably have hidden the GUI, press H ;)
 
 Q: Lights/Model keeps rotating after I released the mouse button
 A: There is a bug in GUI where the "mouse release" does not get recognized when you are inside the GUI.
-	Just click the mouse again and release it outside of the GUI.
+	Just click the "faulty" mouse button again and release it outside of the GUI.
 
 Q: Why does my model don't have any textures?
 A: When you have exported your model with Blender this could be the reason.
