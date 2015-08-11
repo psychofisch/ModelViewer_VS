@@ -41,7 +41,7 @@ The rest is controlled by the GUI.
 				
 4. FAQ
 Q: My model is just black and the light does not work, why?
-A: The modelLoader-AddOn from OpenFrameworks is a bit buggy. Try to open the default model, this should work.
+A: The modelLoader-AddOn from OpenFrameworks is a bit buggy. Try to open one of the example objects, they should work.
 
 Q: AHH! My GUI is gone!
 A: You probably have hidden the GUI, press H ;)

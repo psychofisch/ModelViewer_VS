@@ -9,7 +9,7 @@ Please download OF 0.8.4 for Visual Studio.
 OF 0.8.4 requires Visual Studio 2012.
 http://openframeworks.cc/download/
 
-3) Right Folder
+3) Correct Folder
 Copy the folder that was created by GIT into the following OF folder:
 "..\of_v0.8.4_vs_release\apps\myApps\"
 In my case the complete path looks like this: "G:\FH\Sem4\ECG\download\of_v0.8.4_vs_release\apps\myApps\ModelViewer_VS"
